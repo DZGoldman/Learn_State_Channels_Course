@@ -96,8 +96,8 @@ _Note: this section is still the most "up-in-the-air"_
     - (All still only on ropsten)
 
 
-#### Links: 
-1. Fairify
-2. Guess Num
-3. Ghost
+#### Code Links (WIP): 
+1. https://github.com/DZGoldman/Fairify
+2. https://github.com/DZGoldman/guess_number_demo
+3. https://github.com/DZGoldman/The-Other-Ghost-Protocol
 
