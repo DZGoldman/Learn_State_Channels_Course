@@ -1,7 +1,7 @@
 # A Developer's Guide to State Channels: Rough Syllabus / Notes
 
 ### Goals
-- The objective of this course is to give developers an understanding of layer 2 state channel principles and to give them tools to start building state channel applications. By the end of the course, students will have a wide and deep understanding of state channel architecture, and should have the tools to build state channel applications from the bottom up; in short, the course takes a "the best way to learn about something is to try to build it!" approach to state channels.
+- The objective of this course is to give developers an understanding of layer 2 state channel principles and to give them tools to start building their own state channel applications. By the end of the course, students will have a wide and deep understanding of state channel architecture, and should have the tools to build state channel applications from the bottom up; in short, the course takes a "the best way to learn about something is to try to build it!" approach to learning about state channels.
 
 - Students will also come away with knowledge of technological principles and key terminology in the current ecosystem of Ethereum research and development (both layer 1 and layer 2).
 
@@ -9,7 +9,7 @@
 
 
 ### What the Course Isn't
-- Important disclaimer to give: the code provided in the course should _not_ be considered production ready; the goal is primarily to create functional applications that illustrate core principles, not provide applications ready to deploy on mainnet. Didactically, clarity and simplicity will be prioritized.
+- Important disclaimer to give: the code provided in the course should _not_ be considered production ready; the goal is primarily to create functional applications that illustrate core principles, not provide applications ready to be deploy on mainnet. Didactically, clarity and simplicity will be prioritized.
 
 - The course will not cover any sort of P2P messaging layer or routing system; our applications will assume some centralized (though non-custodial) server for message passing (we will essentially be mimicking a more robust system with a simple web-socket/ webRTC layer).
 
@@ -21,7 +21,7 @@
 ### Installation Requirements:
 - npm/yarn, react, truffle, ganache-cli, ethers.js, electron, python3 (_for backend_)
 
-## Course Structure:
+## Course Ouline:
 
 #### Part 1: Fundamentals
 
@@ -30,16 +30,16 @@
 - Brief overview of other scaling approaches (block size increase, sharding, sidechains, plasma, zk-snarks, etc.)  
 - Define payment channels and state chanels (as distinct from other scaling approaches), give semi-technical overview
     - Possible topics / terminology to cover:
-         - hash time locked contracts, uni-directional vs. bidirectional, "eltoo" style vs. punitive style channels, conditional multi-hop payments, generalized state transitions, "terminal states", stale-state griefing & necessity for timeouts 
+         - Hash time locked contracts, uni-directional vs. bidirectional, "eltoo" style vs. punitive style channels, conditional multi-hop payments, generalized state transitions, "terminal states", stale-state griefing & necessity of timeouts 
 
 ##### Setup 
 - Go through installation of software requirements, including roptsen connection via infura
-- Brief intro to ethers.js (familiarity can't be assumed); necessities are just basic read/write syntax with contract instance, and client-side signing & verifying of  transactions
-- Maybe: also some discussion of more esoteric solidity needs, like ecrecover, abiEncoder,  enums (_though covering these in real-time as they come up as "optional lessons" may be best_)
+- Brief intro to ethers.js (familiarity can't be assumed); necessities are just basic read/write syntax with contract instance, and client-side signing & verifying of transactions
+- Maybe: also some discussion of more esoteric solidity needs, like ecrecover, abiEncoder, enums, etc (_though covering these in real-time as they come up as "optional lessons" may be best_)
 
 #### Part 2: Payment Channels
 - Implement and dissect/analyze contract for "minimum viable payment channel"
-    - Aiming for simplest app possible at this stage: unidirectional channel where payor locks ETH into contract with dispute interval for payer exits; no punishments (just state updates), no mutual closing, no counter-party signature verification required on-chain
+    - Aiming for simplest app possible at this stage: unidirectional channel where payer locks ETH into contract with dispute interval for payer exits; no punishments (just state updates), no mutual closing, no counter-party signature verification required on-chain
     - Probably: only contract itself at this stage, not full application
 - Implement lightning style payment channel contract (_Can use source from [1], with some mods/simplifications_)
     - Multisig entrance, bidirectional, mutual channel closing option, punishment for stale state
@@ -49,7 +49,7 @@
     - React app... reacts to events, and responds appropriately
     - Two-step messaging protocol to achieve finality
     - Simple UI (_probably just provide .css file_)
-    - host on ropsten
+    - Host on ropsten
 
 #### Part 3: State Channels
 - Implement contract for some application-specific state channel; should include deposit, timeouts, some notion of terminality, nonce based turn taking, etc.
@@ -60,7 +60,7 @@
     - This motivates refactoring contract (_the least annoying way to do this would probably be to arrive at this "realization" quickly_)
 - Refactor contract for "statelessness", i.e.: 
     - Manage off-chain state as generalized, flux-style state transition machine, with all off-chain state updates managed via single "Game" struct object
-    - Introduce strategy of "directly updating to state" based on mutually signed encoded state hash
+    - Introduce strategy of "jumpting directly to stake" based on mutually signed encoded state hash; update message protocol accordingly
     - Finish client side implementation; client side code should end up being as close to agnostic to the app-specific details as possible, i.e., should mostly utilize generalized methods like "apply action" and "close channel," with UI-triggered events simply referencing appropriate action names [2]
 - Maybe: discuss and/or use developer APIs for state channel apps if they are available and ready at time of course (Celer? Counterfactual? etc.)
 #### Part 4: Advanced Topics
